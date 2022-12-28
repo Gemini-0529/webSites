@@ -1,0 +1,10 @@
+.el-pagination {
+  .el-pager {
+    li.is-active {
+      @include bg_content("btn_line_color")
+    }
+    .number:hover {
+      @include font_color("btn_line_color")
+    }
+  }
+}

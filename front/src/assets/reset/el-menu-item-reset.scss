@@ -1,0 +1,44 @@
+.el-menu {
+  border-right: unset;
+  @include bg_content("card_color");
+  .is-opened {
+    ul {
+      position: relative;
+      div {
+        li.is-active {
+          @include bg_content("bg_menu");
+        }
+      }
+    }
+  }
+  .el-menu-item {
+    @include font_color("text_primary_color");
+    &:hover {
+      @include bg_content("bg_menu");
+    }
+  }
+  .el-sub-menu {
+    .el-sub-menu__title {
+      span {
+        @include font_color("text_primary_color");
+      }
+      &:hover {
+        @include bg_content("bg_menu");
+      }
+    }
+    &:hover {
+      @include bg_content("bg_menu");
+    };
+    &.is-opened {
+      .el-sub-menu__title {
+        @include font_color("text_primary_color");
+        @include bg_content("bg_menu");
+      }
+    }
+  }
+//   li.el-menu-item {
+//     .is-active {
+//       @include bg_primary("bg_menu")
+//     }
+//   }
+}

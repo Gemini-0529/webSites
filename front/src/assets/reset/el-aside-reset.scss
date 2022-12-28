@@ -1,0 +1,13 @@
+.el-aside {
+  @include bg_content("bg_content");
+  margin-top:20px;
+  // .el-menu {
+  //   @include bg_content("card_color");
+  //   .el-menu-item {
+  //     @include font_color("text_primary_color");
+  //     &:hover {
+
+  //     }
+  //   }
+  // }
+}

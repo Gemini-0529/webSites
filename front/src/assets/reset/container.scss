@@ -1,0 +1,5 @@
+#container {
+  margin: 0 0 0 20px;
+  padding: 0 20px 20px 0;
+  @include bg_content("bg_content");
+}

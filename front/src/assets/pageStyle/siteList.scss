@@ -1,0 +1,97 @@
+#siteList {
+  .operationBtns {
+    margin-bottom: 20px;
+  }
+  .list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+    .siteItem {
+      width: 310px;
+      height: 160px;
+      box-sizing: border-box;
+      margin: 0 20px 20px 0;
+      padding: 10px;
+      @include bg_content("card_color");
+      box-shadow: 2px 2px 8px 0 rgba(0,0,0,.1); 
+      border-radius: 8px;
+      // overflow: hidden;
+      display: flex;
+      cursor: pointer;
+  
+      &:hover {
+        box-shadow: 4px 4px 12px 0 rgba(0,0,0,.15);
+        transition: box-shadow .3s ease-in-out;
+        .operation {
+          display: block !important;
+        }
+        .img .el-image > img {
+          width: 105%;
+          height: 105%;
+          transition: all .3s ease-in-out;
+        }
+        .del {
+          color:#F56C6C;
+        }
+      }
+      .img {
+        box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, .15);
+      }
+      .img,.img > .el-image {
+        width: 100px;
+        height: 100px;
+        background-color: #fff;
+        border-radius: 50%;
+        margin: 0 20px 0 0;
+        box-sizing: border-box;
+      }
+      .content {
+        flex:1;
+        max-width: 170px;
+        .main {
+          .title {
+            font-size: $titleSize;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+          .desc {
+            // color: rgba(0,0,0,.5);
+            @include font_color("text_minor_color");
+            max-width: 187px;
+            min-height: 50px;
+            font-size: 14px;
+            /*3行换行溢出*/
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+            overflow: hidden;
+            overflow-wrap: break-word;
+          }
+        }
+        .operation {
+          // display: flex;
+          // justify-content: space-around;
+          margin-top: 20px;
+          overflow: hidden;
+          .el-icon {
+            float: left;
+            font-size: 22px;
+            &:not(:first-child){
+              margin-left: 20px;
+            }
+          }
+          .select {
+            @include font_color("bg_menu");
+          }
+          .noselect {
+            @include font_color("bg_menu");
+          }
+          display: none;
+        }
+      }
+  
+    }
+
+  }
+}

@@ -1,0 +1,30 @@
+
+.el-button--primary.is-link,
+.el-button--primary.is-plain,
+.el-button--primary.is-text,
+.el-button{
+  @include font_color("btn_line_color");
+  @include border_color("btn_line_color");
+  
+  &:hover,&:focus {
+    @include bg_content("btn_line_color");
+    @include font_color("bg_content")
+  }
+}
+.el-button--primary {
+  background-color: #00919F;
+  span {
+    color: #fff !important;
+  }
+}
+.is-plain {
+  background-color: #eefeff;
+  span {
+    color: #009B93 !important;
+  }
+  &:hover {
+    span {
+      @include font_color("card_color")
+    }
+  }
+}

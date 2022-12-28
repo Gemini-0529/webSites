@@ -1,0 +1,16 @@
+.themes_popper {
+  .el-dropdown__list {
+
+    @include bg_content("bg_content");
+  }
+  .el-dropdown-menu {
+    .el-dropdown-menu__item {
+      @include bg_content("bg_content");
+      @include font_color("text_primary_color");
+      .active {
+        background-color: #f40;
+        
+      }
+    }
+  }
+}

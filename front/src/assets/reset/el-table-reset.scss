@@ -1,0 +1,38 @@
+.el-table {
+  overflow: visible;
+  padding: 0 20px 0 20px;
+  tr {
+    @include font_color("text_minor_color");
+  }
+  // 头部
+  .el-table__header-wrapper {
+    .el-table__header {
+      th {
+        @include bg_content("bg_content");
+        @include font_color("text_primary_color");
+        @include border_color("border_primary_bottom");
+        border-width: 0 0 1px 0;
+      }
+    }
+  }
+  // 内容
+  .el-table__body-wrapper {
+    .el-table__body {
+      width: inherit !important;
+      tr {
+        &.el-table__row {
+          &:hover {
+            @include font_color("text_primary_hover");
+            & > td {
+              @include bg_primary_hover("bg_primary_hover");
+            }
+          }
+        }
+        td {
+          @include border_color("border_primary_bottom");
+          border-width: 0 0 1px 0;
+        }
+      }
+    }
+  }
+}

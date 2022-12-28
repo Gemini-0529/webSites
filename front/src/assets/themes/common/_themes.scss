@@ -1,0 +1,30 @@
+$themes: (
+  light: (
+    bg_primary: #f1f4f9 ,// 主背景色
+    bg_content: #fff,// 内容背景色
+    text_primary_color: #333, // 主文本色
+    text_minor_color: rgba(0,0,0,.6), // 次文本色
+    btn_line_color: #009B93,
+    bg_menu: #009B93,// menu 背景色
+    border_primary_bottom: #f5f5f5,// 主底边框
+    border_minor_bottom: #f1f1f1,// 次要底边框
+    bg_primary_hover: rgba(0, 155, 147, .5),// 鼠标移入主背景色
+    text_primary_hover: #333,// 鼠标移入主文本色
+    card_color: #fafafa,
+    plain_button_color: #fff,
+  ),
+  dark: (
+    bg_primary: #152435,// 主背景色
+    bg_content: #1b2d40,// 内容背景色
+    text_primary_color: #fff, // 主文本色
+    text_minor_color: rgba(255,255,255,.6), // 次文本色
+    btn_line_color: #009B93,
+    bg_menu: #009B93,// menu 背景色
+    border_primary_bottom: #0d1722,// 主底边框
+    border_minor_bottom: rgb(23, 45, 68),// 次要底边框
+    bg_primary_hover: #101d2b,// 鼠标移入主背景色
+    text_primary_hover: #fff,// 鼠标移入主文本色
+    card_color: #2B3D4D,
+    plain_button_color: #fff
+  )
+); 
