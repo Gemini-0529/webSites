@@ -1,11 +1,11 @@
 {
   "name": "sites_node",
   "version": "1.0.0",
-  "description": "",
+  "description": "vue3+vite+node+pm2",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "serve": "nodemon index.js"
+    "serve": "pm2 start pm2.json --watch"
   },
   "author": "",
   "license": "ISC",
@@ -15,7 +15,6 @@
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.4",
     "multiparty": "^4.2.3",
-    "mysql": "^2.18.1",
-    "nodemon": "^2.0.20"
+    "mysql": "^2.18.1"
   }
 }

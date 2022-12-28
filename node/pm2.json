@@ -1,0 +1,17 @@
+{
+  "apps": {
+    "name": "pm2_node",
+    "script": "index.js",
+    "cwd": "./",
+    "watch": true,
+    "ignore_watch": [
+      "node_modules",
+      "images"
+    ],
+    "error_file": "./logs/app-err.log",
+    "out_file": "./logs/app-out.log",
+    "log_date_format": "YYYY-MM-DD HH:mm:ss",
+    "autorestart": true,
+    "restart_delay": "60"
+  }
+}
