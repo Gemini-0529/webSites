@@ -7,6 +7,7 @@
       div {
         li.is-active {
           @include bg_content("bg_menu");
+          @include font_color("plain_button_color");
         }
       }
     }

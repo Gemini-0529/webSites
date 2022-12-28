@@ -1,7 +1,10 @@
 import axios from 'axios'
 import Cookies from 'js-cookie'
+
+const baseURL = import.meta.env.VITE_BASE_URL
+
 const instance = axios.create({
-    baseURL: '',
+    baseURL,
     timeout: 5000,
 })
 
@@ -33,8 +36,10 @@ instance.interceptors.response.use(
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
     // 401跳转到login
-    console.log('响应拦截器',error.response.status);
-
+    if(error.response.status === 401) {
+      window.location.href = `${baseURL}/login`
+      return
+    }
     return Promise.reject(error);
   }
 );
