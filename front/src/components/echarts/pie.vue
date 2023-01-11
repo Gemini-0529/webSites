@@ -12,11 +12,13 @@ const props = defineProps({
     default: [], // {name, value}
     required: false,
   },
+  formatterTooltip: Array, // [[label, value]]
   roseType: String | Boolean,
   showLegend: Boolean,
 });
 var myChart = null,
   options = {};
+const emits = defineEmits(["clickItem", "formatTooltip"]);
 function init() {
   myChart = echarts.init(document.getElementById("pie"));
   options = {
@@ -32,7 +34,13 @@ function init() {
     },
     tooltip: {
       trigger: "item",
-      formatter: "{a} <br/>{b} : {c} ({d}%)",
+      formatter: (params) => {
+        let text = "";
+        props.formatterTooltip.forEach((item) => {
+          text += `${item[0]}${params.data[item[1]]}</br>`;
+        });
+        return text;
+      },
     },
     // 图例
     legend: {
@@ -52,7 +60,7 @@ function init() {
     // },
     series: [
       {
-        name: "Area Mode", // legend name
+        name: "", // legend name
         type: "pie",
         radius: [40, 120], // 饼图内外圆半径
         center: ["50%", "50%"],
@@ -66,7 +74,6 @@ function init() {
   };
   myChart.setOption(options);
 }
-const emits = defineEmits(["clickItem"]);
 onMounted(() => {
   init();
   myChart.on("click", (params) => {
@@ -76,7 +83,7 @@ onMounted(() => {
 });
 onUnmounted(() => {
   myChart = null;
-  window.removeEventListener('resize',resize)
+  window.removeEventListener("resize", resize);
 });
 function resize() {
   myChart.resize();
