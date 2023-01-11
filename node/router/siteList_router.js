@@ -77,4 +77,23 @@ router.post("/updateSite", (req, response) => {
     set label='${label}',description='${description}',link='${link}',icon='${icon}',isCollect=${isCollect} where id=${id}`;
   editDbData(sql, response);
 });
+// 经常访问
+router.get("/frequentlyVisited", (req, response) => {
+  const sql = `
+    select label, link, visitTimes from sitelist
+    where visitTimes >= 5
+    ORDER BY visitTimes DESC
+  `
+  getDataFromDb(sql, response,false)
+})
+// 点击后增加访问次数
+router.post("/addVisitTimes", (req, response) => {
+  const {id,visitTimes} = req.body
+  const sql = `
+    update sitelist
+    set visitTimes=${visitTimes+1}
+    where id=${id}
+  `
+  editDbData(sql, response);
+})
 module.exports = router;
