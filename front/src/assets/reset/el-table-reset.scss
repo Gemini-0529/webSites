@@ -1,6 +1,5 @@
 .el-table {
   overflow: visible;
-  padding: 0 20px 0 20px;
   tr {
     @include font_color("text_minor_color");
   }
