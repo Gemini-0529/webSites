@@ -38,6 +38,16 @@ function updateSite(params) {
     ...params,
   });
 }
+// 经常访问
+function frequentlyVisited() {
+  return axios.get("API/site/frequentlyVisited",{})
+}
+// 点击后增加访问次数
+function addVisitTimes(params) {
+  return axios.post("/API/site/addVisitTimes", {
+    ...params
+  })
+}
 export {
   getSiteList,
   addSite,
@@ -46,4 +56,6 @@ export {
   colSite,
   siteDetail,
   updateSite,
+  frequentlyVisited,
+  addVisitTimes,
 };
