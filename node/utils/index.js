@@ -8,15 +8,11 @@ const cheerio = require("cheerio");
 function getDataFromDb(
   // ...arg
   sql,
-  totalSql,
   response,
-  isFormatTime = false,
+  isFormatTime = true,
   formtValue = "YYYY-MM-DD",
+  showTotal = false
 ) {
-  // total先搁置
-  // if(totalSql) {
-  //   dataObj.total = getTotal(totalSql)
-  // }
   db.query(sql, (err, data) => {
     if (err) {
       response.json({
@@ -30,10 +26,18 @@ function getDataFromDb(
           item.createTime = moment(item.createTime).format(formtValue);
         });
       }
+      if (showTotal) {
+        const { data: arr, total } = getTotal(data);
+        response.json({
+          data: arr,
+          status: 200,
+          total,
+        });
+        return;
+      }
       response.json({
-        status: 200,
         data,
-        total:100,
+        status: 200,
       });
     }
   });
