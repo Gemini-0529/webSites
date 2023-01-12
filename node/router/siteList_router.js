@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { getDataFromDb, editDbData, handleHTML } = require("../utils/index");
+const { getDataFromDb, editDbData, handleHTML, formatTime } = require("../utils/index");
 
 const https = require("https");
 // 查询网站列表
@@ -91,7 +91,7 @@ router.post("/addVisitTimes", (req, response) => {
   const {id,visitTimes} = req.body
   const sql = `
     update sitelist
-    set visitTimes=${visitTimes+1}
+    set visitTimes=${visitTimes+1},lastVisitedTime='${formatTime(current)}'
     where id=${id}
   `
   editDbData(sql, response);
