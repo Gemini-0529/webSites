@@ -37,8 +37,7 @@ async function getSiteLists() {
       siteList.total = total;
     } else {
       siteList.lists = [];
-      // node未实现返回total，暂时注释掉，否则分页条强制跳转到第一页
-      // siteList.total = 0;
+      siteList.total = 0;
     }
   } catch (err) {
     console.log("服务器错误", err.message);
