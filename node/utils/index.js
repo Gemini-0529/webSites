@@ -79,8 +79,19 @@ function getTotal(sql) {
   console.log('!!!',abc);
   return abc
 }
+function formatTime(time) {
+  const current = new Date(time)
+  let year = current.getFullYear()
+  let month = current.getMonth() + 1 > 9 ? current.getMonth() + 1 : '0' + current.getMonth() + 1
+  let day = current.getDate()
+  let hour = current.getHours()
+  let min = current.getMinutes()
+  let second = current.getSeconds()
+  return `${year}-${month}-${day} ${hour}:${min}:${second}`
+}
 module.exports = {
   getDataFromDb,
   editDbData,
   handleHTML,
+  formatTime,
 };
