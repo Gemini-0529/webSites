@@ -1,5 +1,6 @@
 // 相对时间
 export function fromNow(startTime) {
+  if(!startTime) return '--'
   const currentTime = Date.parse(new Date()),
     time = currentTime - startTime,
     day = parseInt(time / (1000 * 60 * 60 * 24)),
