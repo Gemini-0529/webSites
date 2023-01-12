@@ -65,19 +65,18 @@ function handleHTML(data) {
     description
   };
 }
-function getTotal(sql) {
-  let abc = 0
-  db.query(sql, (err, data) => {
-    if(err) {
-      return null
-    }else {
-      console.log('789',data);
-      abc = data
-      console.log('???',abc);
+function getTotal(data) {
+  let total = 0;
+  data.forEach((item) => {
+    if (!total) {
+      total = item.total;
     }
-  })
-  console.log('!!!',abc);
-  return abc
+    delete item.total;
+  });
+  return {
+    total,
+    data,
+  };
 }
 function formatTime(time) {
   const current = new Date(time)
