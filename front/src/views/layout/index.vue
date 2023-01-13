@@ -5,6 +5,7 @@ import BreadCrumb from '@components/breadcrumb.vue'
 import imgUrl from '@/assets/images/logo.png'
 import { reactive } from '@vue/reactivity'
 import { onMounted, ref } from 'vue'
+import History from './history.vue'
 const onlineUrl = 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
 
 const themes = reactive([
@@ -83,6 +84,9 @@ function handleCommand(theme) {
           <BreadCrumb/>
           <router-view></router-view>
         </el-main>
+        <div style="width:350px;margin-top:20px;">
+          <History/>
+        </div>
       </el-container>
     </el-container>
 </template>
@@ -110,6 +114,6 @@ function handleCommand(theme) {
     }
   }
   .main {
-    height: calc(100vh - 80px);
+    height: calc(100vh - 60px);
   }
 </style>
