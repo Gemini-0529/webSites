@@ -40,6 +40,7 @@ function changeRange(val) {
       times = [moment().format("YYYY-MM-DD"), curTime];
       break;
   }
+  list.currentPage = 1
   getHistory(times, true);
 }
 onMounted(() => {
