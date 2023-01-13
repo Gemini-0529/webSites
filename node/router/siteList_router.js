@@ -96,14 +96,15 @@ router.post("/addVisitTimes", (req, response) => {
   `
   editDbData(sql, response);
 })
-// 历史记录
+// 上个月、上周、今日历史记录
 router.get('/history',(req, response) => {
-  const {startTime, endTime} = req.query
+  const {startTime, endTime, currentPage, pageSize} = req.query
   const sql = `
-    select * from sitelist
+    select *,COUNT(1) over() as total from sitelist
     where lastVisitedTime <= '${endTime}' && lastVisitedTime >= '${startTime}'
     order by lastVisitedTime desc
+    limit ${(currentPage - 1) * pageSize},${pageSize}
   `
-  getDataFromDb(sql, response, false)
+  getDataFromDb(sql, response, false,"YYYY-MM-DD",true)
 })
 module.exports = router;
