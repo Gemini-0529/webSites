@@ -1,16 +1,24 @@
-.themes_popper {
-  .el-dropdown__list {
+// .themes_popper {
+  // .el-dropdown__list {
 
-    @include bg_content("bg_content");
-  }
+  //   @include bg_content("bg_content");
+  // }
   .el-dropdown-menu {
+    border: none;
+    @include bg_content("bg_content");
     .el-dropdown-menu__item {
       @include bg_content("bg_content");
       @include font_color("text_primary_color");
-      .active {
-        background-color: #f40;
-        
+      &.active {
+        @include bg_content("bg_menu");
+        @include font_color("text_primary_color");
+        &:hover {
+          @include bg_content("bg_menu");
+        }
+      }
+      &:hover {
+        @include bg_content("bg_hover");
       }
     }
   }
-}
+// }

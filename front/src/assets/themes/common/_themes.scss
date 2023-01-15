@@ -12,6 +12,7 @@ $themes: (
     text_primary_hover: #333,// 鼠标移入主文本色
     card_color: #fafafa,
     plain_button_color: #fff,
+    bg_hover: #fafafa,
   ),
   dark: (
     bg_primary: #152435,// 主背景色
@@ -25,6 +26,7 @@ $themes: (
     bg_primary_hover: #101d2b,// 鼠标移入主背景色
     text_primary_hover: #fff,// 鼠标移入主文本色
     card_color: #2B3D4D,
-    plain_button_color: #fff
+    plain_button_color: #fff,
+    bg_hover: rgba(255,255,255,0.03)
   )
 ); 
