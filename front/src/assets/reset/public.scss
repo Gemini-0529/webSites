@@ -17,13 +17,15 @@
 @import '../pageStyle/siteList.scss';// 网站列表
 @import '../pageStyle/login.scss';// login
 @import '../pageStyle/register.scss';// register
+@import '../pageStyle/history.scss';// history
+
 * {
   margin: 0;
   padding: 0;
   font-family: "Microsoft YaHei", Arial, "\5FAE\8F6F\96C5\9ED1", "Hiragino Sans GB", "Helvetica Neue", Helvetica, "PingFang SC", sans-serif;
 }
 #app {
-  min-width: 1000px;
+  height:100vh;
   @include bg_primary("bg_primary");
   @include font_color("text_primary_color");
 }
@@ -34,4 +36,34 @@
 }
 #home {
   padding: 20px 0 0 20px;
+}
+// 滚动条样式
+/*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  :hover {
+    width: 10px;
+    height: 10px;
+  }
+}
+/*定义滚动条轨道 内阴影+圆角*/
+::-webkit-scrollbar-track {
+  @include bg_content("card_color");/*滚动条的背景颜色*/
+  border-radius: 2px;/*滚动条的背景区域的圆角*/
+}
+/*定义滑块 内阴影+圆角*/
+::-webkit-scrollbar-thumb {
+  @include bg_content("bg_menu");
+  border-radius: 4px;/*滚动条圆角*/
+  
+}
+// 滚动条两端的按钮。
+::-webkit-scrollbar-button {
+  display: none;
+}
+// 内层轨道，滚动条中间部分（除去）。
+::-webkit-scrollbar-track-piece {
+  background: transparent;
+  border-radius: 3px;
 }

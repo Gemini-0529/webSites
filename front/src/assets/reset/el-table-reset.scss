@@ -1,12 +1,12 @@
 .el-table {
   overflow: visible;
-  padding: 0 20px 0 20px;
   tr {
     @include font_color("text_minor_color");
   }
   // 头部
   .el-table__header-wrapper {
     .el-table__header {
+      width: 100% !important;
       th {
         @include bg_content("bg_content");
         @include font_color("text_primary_color");
@@ -18,7 +18,7 @@
   // 内容
   .el-table__body-wrapper {
     .el-table__body {
-      width: inherit !important;
+      width: 100% !important;
       tr {
         &.el-table__row {
           &:hover {

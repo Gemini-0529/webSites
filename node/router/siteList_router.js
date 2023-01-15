@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { getDataFromDb, editDbData, handleHTML } = require("../utils/index");
+const { getDataFromDb, editDbData, handleHTML, formatTime } = require("../utils/index");
 
 const https = require("https");
 // 查询网站列表
@@ -77,4 +77,34 @@ router.post("/updateSite", (req, response) => {
     set label='${label}',description='${description}',link='${link}',icon='${icon}',isCollect=${isCollect} where id=${id}`;
   editDbData(sql, response);
 });
+// 经常访问
+router.get("/frequentlyVisited", (req, response) => {
+  const sql = `
+    select label, link, visitTimes from sitelist
+    where visitTimes >= 5
+    ORDER BY visitTimes DESC
+  `
+  getDataFromDb(sql, response,false)
+})
+// 点击后增加访问次数
+router.post("/addVisitTimes", (req, response) => {
+  const {id,visitTimes} = req.body
+  const sql = `
+    update sitelist
+    set visitTimes=${visitTimes+1},lastVisitedTime='${formatTime(current)}'
+    where id=${id}
+  `
+  editDbData(sql, response);
+})
+// 上个月、上周、今日历史记录
+router.get('/history',(req, response) => {
+  const {startTime, endTime, currentPage, pageSize} = req.query
+  const sql = `
+    select *,COUNT(1) over() as total from sitelist
+    where lastVisitedTime <= '${endTime}' && lastVisitedTime >= '${startTime}'
+    order by lastVisitedTime desc
+    limit ${(currentPage - 1) * pageSize},${pageSize}
+  `
+  getDataFromDb(sql, response, false,"YYYY-MM-DD",true)
+})
 module.exports = router;

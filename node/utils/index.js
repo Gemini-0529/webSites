@@ -8,15 +8,11 @@ const cheerio = require("cheerio");
 function getDataFromDb(
   // ...arg
   sql,
-  totalSql,
   response,
-  isFormatTime = false,
+  isFormatTime = true,
   formtValue = "YYYY-MM-DD",
+  showTotal = false
 ) {
-  // total先搁置
-  // if(totalSql) {
-  //   dataObj.total = getTotal(totalSql)
-  // }
   db.query(sql, (err, data) => {
     if (err) {
       response.json({
@@ -30,10 +26,18 @@ function getDataFromDb(
           item.createTime = moment(item.createTime).format(formtValue);
         });
       }
+      if (showTotal) {
+        const { data: arr, total } = getTotal(data);
+        response.json({
+          data: arr,
+          status: 200,
+          total,
+        });
+        return;
+      }
       response.json({
-        status: 200,
         data,
-        total:100,
+        status: 200,
       });
     }
   });
@@ -65,22 +69,32 @@ function handleHTML(data) {
     description
   };
 }
-function getTotal(sql) {
-  let abc = 0
-  db.query(sql, (err, data) => {
-    if(err) {
-      return null
-    }else {
-      console.log('789',data);
-      abc = data
-      console.log('???',abc);
+function getTotal(data) {
+  let total = 0;
+  data.forEach((item) => {
+    if (!total) {
+      total = item.total;
     }
-  })
-  console.log('!!!',abc);
-  return abc
+    delete item.total;
+  });
+  return {
+    total,
+    data,
+  };
+}
+function formatTime(time) {
+  const current = new Date(time)
+  let year = current.getFullYear()
+  let month = current.getMonth() + 1 > 9 ? current.getMonth() + 1 : '0' + current.getMonth() + 1
+  let day = current.getDate()
+  let hour = current.getHours()
+  let min = current.getMinutes()
+  let second = current.getSeconds()
+  return `${year}-${month}-${day} ${hour}:${min}:${second}`
 }
 module.exports = {
   getDataFromDb,
   editDbData,
   handleHTML,
+  formatTime,
 };

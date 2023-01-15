@@ -7,7 +7,7 @@ import { reactive } from "@vue/reactivity";
 import { onMounted, ref } from "vue";
 const onlineUrl =
   "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg";
-
+import History from "./history.vue";
 const themes = reactive([
   {
     index: "dark",
@@ -99,6 +99,9 @@ function handleCommand(theme) {
         <BreadCrumb />
         <router-view></router-view>
       </el-main>
+      <div style="width: 350px; margin-top: 20px">
+        <History />
+      </div>
     </el-container>
   </el-container>
 </template>
@@ -132,6 +135,8 @@ function handleCommand(theme) {
   cursor: default;
   .userInfo {
     margin-left: 10px;
+  .main {
+    height: calc(100vh - 60px);
   }
 }
 </style>

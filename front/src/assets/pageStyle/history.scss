@@ -1,0 +1,50 @@
+#wrapper {
+    width: 350px;
+    overflow: hidden;
+    box-shadow: 2px 2px 8px 0 rgba(0,0,0,.1);
+    @include bg_content("card_color");
+    ul {
+      height: 230px;// 必须给滚动容器加高度，否则滚动组件无法监听到滚动位置
+      padding: 0 4px 0 4px;
+      @include font_color("text_minor_color");
+      li {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        line-height: 28px;
+        &:first-child {
+          position: sticky;
+          top: 0;
+          font-weight: bold;
+          @include bg_content("card_color");
+        }
+        &:nth-child(2n) {
+        @include bg_content("bg_primary_hover")
+        }
+        &:nth-last-child(1),&:nth-last-child(1) {
+          text-align: center;
+          line-height: 30px;
+        }
+        &:not(:first-child):hover {
+          background-color: #009B93 !important;
+        }
+        span {
+          &:hover {
+            cursor: pointer;
+          }
+          &:nth-child(1) {
+            width: 120px;
+          };
+          &:nth-child(2) {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            flex: 1;
+          }
+          &:nth-child(3) {
+            width: 60px;
+          }
+        }
+      }
+    }
+  }

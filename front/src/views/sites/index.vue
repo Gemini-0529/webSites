@@ -8,6 +8,7 @@ import CreateSiteDialog from "./components/createSite.vue";
 import useRenderH from "@/hooks/useRenderH.js";
 import Pagination from "@/components/pagination.vue";
 import empty from "../../assets/images/empty-light.png";
+import { fromNow } from "@/utils/index.js";
 const router = useRouter();
 console.log(router);
 const siteList = reactive({
@@ -29,12 +30,14 @@ async function getSiteLists() {
     const res = await getSiteList(siteList.params);
     const { data, status, total } = res;
     if (data.length && status === 200) {
+      data.forEach(item => {
+        item.lastVisitedTime = fromNow(item.lastVisitedTime);
+      });
       siteList.lists = data;
       siteList.total = total;
     } else {
       siteList.lists = [];
-      // node未实现返回total，暂时注释掉，否则分页条强制跳转到第一页
-      // siteList.total = 0;
+      siteList.total = 0;
     }
   } catch (err) {
     console.log("服务器错误", err.message);
