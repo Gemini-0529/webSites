@@ -1,0 +1,18 @@
+.el-radio-group {
+    .el-radio-button {
+        .el-radio-button__inner {
+            &:hover {
+                @include font_color("btn_line_color")
+            }
+
+        }
+    }
+    .el-radio-button.is-active {
+        .el-radio-button__inner {
+            @include bg_content("btn_line_color");
+            &:hover {
+                color: #fff !important;
+            }
+        }
+    }
+}
