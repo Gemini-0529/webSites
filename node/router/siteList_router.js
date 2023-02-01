@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { getDataFromDb, editDbData, handleHTML, formatTime } = require("../utils/index");
+const moment = require('moment')
 
 const https = require("https");
 // 查询网站列表
@@ -106,5 +107,15 @@ router.get('/history',(req, response) => {
     limit ${(currentPage - 1) * pageSize},${pageSize}
   `
   getDataFromDb(sql, response, false,"YYYY-MM-DD",true)
+})
+// 近一年新增网站
+router.get('/newAdd',(req, response) => {
+  const today = formatTime(new Date().getTime())
+  const oneYearAgo = moment().subtract(2,'year').format('YYYY-MM-DD')
+  const sql = `
+    select createTime,label from sitelist
+    where createTime <= '${today}' && createTime >= '${oneYearAgo}'
+  `
+  getDataFromDb(sql, response, true, "YYYY-MM-DD")
 })
 module.exports = router;
