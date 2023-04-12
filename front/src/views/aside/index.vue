@@ -4,6 +4,7 @@ import { reactive, onBeforeMount, onMounted } from "vue";
 import { useMenu } from "@/stores/menuList.js";
 import MenuItem from "./menuItem.vue";
 import { useRouter } from "vue-router";
+import addMenuDialog from './addMenuDialog.vue'
 
 // 获取菜单数据
 const menuStore = useMenu();
@@ -23,6 +24,10 @@ function selectMenu(index, indexPath, item) {
     params: { id: index },
   });
 }
+const showDialog = ref(false)
+const addMenu = function() {
+  showDialog.value = true
+}
 </script>
 <template>
   <el-aside width="200px">
@@ -41,4 +46,5 @@ function selectMenu(index, indexPath, item) {
     </template>
     <div v-else>暂无数据</div>
   </el-aside>
+  <addMenuDialog v-model:showDialog="showDialog"/>
 </template>
