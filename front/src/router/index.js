@@ -8,6 +8,8 @@ const Welcome = () => import("@/views/home/welcome.vue")
 const Login = () => import("@/views/login/index.vue")
 const Register = () => import("@/views/register/index.vue")
 
+const UserInfo = () => import("@/views/header/components/userInfo.vue")
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -26,17 +28,34 @@ const router = createRouter({
               path: '/welcome',
               name: 'Welcome',
               component: Welcome,
+              meta: {
+                title: '欢迎'
+              }
             },
             {
               path: "/sites/:id",
               name: "Sites",
               component: Sites,
+              meta: {
+                title: '网站'
+              }
             },
             {
               path: "/sites/:id/detail",
               name: "SiteDetail",
               component: SiteDetail,
+              meta: {
+                title: '详情'
+              }
             },
+            {
+              path: '/userInfo',
+              name: 'userInfo',
+              component: UserInfo,
+              meta: {
+                title: '用户信息'
+              }
+            }
           ],
         },
       ],
@@ -44,17 +63,21 @@ const router = createRouter({
     {
       path: '/login',
       name: 'Login',
-      component: Login
+      component: Login,
+      meta: {
+        title: '登录'
+      }
     },
     {
       path: '/register',
       name: 'Register',
-      component: Register
+      component: Register,
+      meta: {
+        title: '注册'
+      }
     },
   ],
 });
-
-
 router.beforeEach((to, from, next) => {
   
   document.title = to.meta.title
