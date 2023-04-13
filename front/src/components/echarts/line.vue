@@ -27,6 +27,10 @@ const props = defineProps({
     default: true,
     required: false,
   },
+  loopTooltip: {
+    type: Boolean,
+    default: false
+  }
 });
 var myChart = null,
   options = {};
@@ -76,25 +80,10 @@ function init() {
       },
     ],
   };
-// 自动轮播tooltip的起始索引
-  var index = 0;
-  var toolTimer = setInterval(() => {
-    myChart?.dispatchAction({
-      type: "showTip",
-      seriesIndex: 0,
-      dataIndex: index,
-    });
-    index++;
-    if (index > options.series[0].data.length) {
-      index = 0;
-    }
-  }, 1500);
-  myChart.on("mouseover", () => {
-    clearInterval(toolTimer);
-  });
-  myChart.on("mouseout", () => {
-    clearInterval(toolTimer);
-    toolTimer = setInterval(() => {
+// 自动轮播tooltip
+  if(props.loopTooltip) {
+    var index = 0;
+    var toolTimer = setInterval(() => {
       myChart?.dispatchAction({
         type: "showTip",
         seriesIndex: 0,
@@ -105,7 +94,24 @@ function init() {
         index = 0;
       }
     }, 1500);
-  });
+    myChart.on("mouseover", () => {
+      clearInterval(toolTimer);
+    });
+    myChart.on("mouseout", () => {
+      clearInterval(toolTimer);
+      toolTimer = setInterval(() => {
+        myChart?.dispatchAction({
+          type: "showTip",
+          seriesIndex: 0,
+          dataIndex: index,
+        });
+        index++;
+        if (index > options.series[0].data.length) {
+          index = 0;
+        }
+      }, 1500);
+    });
+  }
   myChart.setOption(options);
 }
 const emits = defineEmits(["clickItem"]);
