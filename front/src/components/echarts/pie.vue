@@ -15,12 +15,13 @@ const props = defineProps({
   formatterTooltip: Array, // [[label, value]]
   roseType: String | Boolean,
   showLegend: Boolean,
+  charId: String,
 });
 var myChart = null,
   options = {};
 const emits = defineEmits(["clickItem", "formatTooltip"]);
 function init() {
-  myChart = echarts.init(document.getElementById("pie"));
+  myChart = echarts.init(document.getElementById(props.charId));
   options = {
     title: {
       text: props.title,
@@ -90,5 +91,5 @@ function resize() {
 }
 </script>
 <template>
-  <div id="pie"></div>
+  <div :id="props.charId"></div>
 </template>
