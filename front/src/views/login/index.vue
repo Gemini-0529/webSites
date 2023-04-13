@@ -39,6 +39,7 @@ async function submitLogin() {
   if (res?.token) {
     // 种cookie
     Cookies.set("token",res.token)
+    localStorage.setItem('uid',res.uid)
     ElMessage.success("登录成功");
     setTimeout(() => {
       router.push("/welcome");
