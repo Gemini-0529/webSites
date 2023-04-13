@@ -6,6 +6,7 @@ const menuRouter = require('./router/menu_router')
 const siteRouter = require('./router/siteList_router')
 const loginRouter = require('./router/login_router')
 const registerRouter = require('./router/register_router')
+const userRouter = require('./router/user_router')
 
 const commonRouter = require('./router/common_router')
 
@@ -40,5 +41,7 @@ app.use((req,res,next) => {
 // 网站相关路由
 app.use('/site', siteRouter)
 
+// 用户信息路由
+app.use('/user', userRouter)
 // 其他相关路由
 app.use('/common', commonRouter)
