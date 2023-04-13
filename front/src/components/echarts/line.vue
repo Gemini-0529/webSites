@@ -7,6 +7,7 @@ import {
   watch,
   onBeforeUpdate,
   nextTick,
+  ref,
 } from "vue";
 import * as echarts from "echarts";
 const props = defineProps({
@@ -20,29 +21,17 @@ const props = defineProps({
     default: [], // {name, value}
     required: false,
   },
-  myid: String,
+  chartId: String,
   isSmooth: {
     type: Boolean,
     default: true,
     required: false,
   },
 });
-watch(
-  () => props.lineData,
-  (n, o) => {
-    // 解决渲染图表时，数据未获取到
-    if (n.length) {
-      init();
-    }
-  },
-  { immediate: true }
-);
 var myChart = null,
   options = {};
-
 function init() {
-  console.log("dom节点", props.myid, document.getElementById(props.myid));
-  myChart = echarts.init(document.getElementById(props.myid));
+  myChart = echarts.init(document.getElementById(props.chartId));
   const nameList = props.lineData.map((item) => item.name);
   const valueList = props.lineData.map((item) => item.value);
 
@@ -87,10 +76,41 @@ function init() {
       },
     ],
   };
+// 自动轮播tooltip的起始索引
+  var index = 0;
+  var toolTimer = setInterval(() => {
+    myChart?.dispatchAction({
+      type: "showTip",
+      seriesIndex: 0,
+      dataIndex: index,
+    });
+    index++;
+    if (index > options.series[0].data.length) {
+      index = 0;
+    }
+  }, 1500);
+  myChart.on("mouseover", () => {
+    clearInterval(toolTimer);
+  });
+  myChart.on("mouseout", () => {
+    clearInterval(toolTimer);
+    toolTimer = setInterval(() => {
+      myChart?.dispatchAction({
+        type: "showTip",
+        seriesIndex: 0,
+        dataIndex: index,
+      });
+      index++;
+      if (index > options.series[0].data.length) {
+        index = 0;
+      }
+    }, 1500);
+  });
   myChart.setOption(options);
 }
 const emits = defineEmits(["clickItem"]);
-onBeforeUpdate(() => {
+onMounted(() => {
+  init();
   myChart.on("click", (params) => {
     emits("clickItem", params.data);
   });
@@ -105,5 +125,5 @@ function resize() {
 }
 </script>
 <template>
-  <div :id="props.myid"></div>
+  <div :id="props.chartId"></div>
 </template>
