@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, ref, defineEmits, watch, nextTick, computed } from "vue";
+import { reactive, ref, defineEmits, watch, nextTick, computed, defineProps } from "vue";
 import { useMenu } from "@/stores/menuList.js";
 import { spliderIcon, updateSite } from "@/api/siteList.js";
 import UploadImg from "@/components/uploadImgAvatar.vue";

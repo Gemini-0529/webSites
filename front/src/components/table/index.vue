@@ -1,14 +1,14 @@
 <template>
 <div class="common">
   <div class="common_table">
-    <el-table :data="tableData">
+    <!-- <el-table :data="tableData">
       <el-table-column
         v-for="column in tableColumns"
         :prop="column.prop"
         :label="column.prop"
         :width="column.width"
       />
-    </el-table>
+    </el-table> -->
   </div>
   <div class="common_pagination">
     <Pagination background :total="100"/>

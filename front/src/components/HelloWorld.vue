@@ -1,10 +1,11 @@
 <script setup>
+import { defineProps } from "vue";
 defineProps({
   msg: {
     type: String,
-    required: true
-  }
-})
+    required: true,
+  },
+});
 </script>
 
 <template>

@@ -54,6 +54,6 @@ frequentlyVisitedTimes()
   <div>
     <Pie title="南丁格尔饼图南丁" roseType="area" :pieData="pieData.data" style="width:400px;height:400px;" showLegend @clickItem="clickItem" v-if="pieData.data.length" :formatterTooltip="[['名称：','name'],['地址：','link'],['访问次数：','visitTimes']]"/>
     <Line title="南丁格尔饼图南丁" :lineData="lineData" style="width:400px;height:400px;" @clickItem="clickItem"/>
-    <Table :tableData="menuStore.menus" :tableColumns="tableColumns"/>
+    <!-- <Table :tableData="menuStore.menus" :tableColumns="tableColumns"/> -->
   </div>
 </template>

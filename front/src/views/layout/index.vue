@@ -131,12 +131,13 @@ function handleCommand(theme) {
 .main {
   height: calc(100vh - 80px);
 }
-::v-deep .user_item {
+:deep(.user_item) {
   cursor: default;
   .userInfo {
     margin-left: 10px;
-  .main {
-    height: calc(100vh - 60px);
+    .main {
+      height: calc(100vh - 60px);
+    }
   }
 }
 </style>
