@@ -122,7 +122,7 @@ function handleCommandUser(action) {
       }
     }
   }
-}
+
 .main {
   height: calc(100vh - 80px);
 }
@@ -134,4 +134,4 @@ function handleCommandUser(action) {
       height: calc(100vh - 60px);
     }
   }
-</style>
+}
