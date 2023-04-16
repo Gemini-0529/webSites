@@ -1,19 +1,24 @@
 const express = require("express");
 const router = express.Router();
-const { getDataFromDb, editDbData, handleHTML, formatTime } = require("../utils/index");
+const {
+  getDataFromDb,
+  editDbData,
+  handleHTML,
+  formatTime,
+} = require("../utils/index");
+const moment = require("moment");
 
 const https = require("https");
 // 查询网站列表
 router.get("/siteList", (req, response) => {
-  const { id, currentPage, pageSize }  = req.query
+  const { id, currentPage, pageSize } = req.query;
+  // select * from siteList
   const sql = `
-  select * from siteList
-  where typeId = ${id}
-  limit ${(currentPage - 1) * pageSize},${pageSize}
+    SELECT *,COUNT(1) over() as total FROM siteList
+    where typeId = ${id}
+    limit ${(currentPage - 1) * pageSize},${pageSize}
   `;
-  // total
-  const totalSql = `select count(1) as total from siteList where typeId=${id}`
-  getDataFromDb(sql, totalSql, response, true, "YYYY-MM-DD");
+  getDataFromDb(sql, response, true, "YYYY-MM-DD", true);
 });
 // 输入链接，自动获取对应icon
 router.get("/getIco", (req, response) => {
@@ -29,12 +34,12 @@ router.get("/getIco", (req, response) => {
           ...href_desc,
         });
       });
-    }catch(err) {
+    } catch (err) {
       response.json({
         data: null,
         status: 500,
         msg: err,
-      })
+      });
     }
   });
 });
@@ -67,13 +72,13 @@ router.post("/colSite", (req, response) => {
 // 网站详情
 router.get("/siteDetail", (req, response) => {
   const sql = `select * from siteList where id=${req.query.id}`;
-  getDataFromDb(sql, null, response, true, "YYYY-MM-DD HH:mm:ss");
+  getDataFromDb(sql, response, true, "YYYY-MM-DD HH:mm:ss");
 });
 // 修改网站
 router.post("/updateSite", (req, response) => {
   const { label, description, link, icon, isCollect, id } = req.body;
   const sql = `
-    update siteList
+    update sitelist
     set label='${label}',description='${description}',link='${link}',icon='${icon}',isCollect=${isCollect} where id=${id}`;
   editDbData(sql, response);
 });
@@ -83,28 +88,40 @@ router.get("/frequentlyVisited", (req, response) => {
     select label, link, visitTimes from sitelist
     where visitTimes >= 5
     ORDER BY visitTimes DESC
-  `
-  getDataFromDb(sql, response,false)
-})
+  `;
+  getDataFromDb(sql, response, false);
+});
 // 点击后增加访问次数
 router.post("/addVisitTimes", (req, response) => {
-  const {id,visitTimes} = req.body
+  const { id, visitTimes } = req.body;
+  const current = new Date().getTime();
   const sql = `
     update sitelist
-    set visitTimes=${visitTimes+1},lastVisitedTime='${formatTime(current)}'
+    set visitTimes=${visitTimes + 1},lastVisitedTime='${formatTime(current)}'
     where id=${id}
-  `
+  `;
+  console.log("sql", sql);
   editDbData(sql, response);
-})
+});
 // 上个月、上周、今日历史记录
-router.get('/history',(req, response) => {
-  const {startTime, endTime, currentPage, pageSize} = req.query
+router.get("/history", (req, response) => {
+  const { startTime, endTime, currentPage, pageSize } = req.query;
   const sql = `
     select *,COUNT(1) over() as total from sitelist
-    where lastVisitedTime <= '${endTime}' && lastVisitedTime >= '${startTime}'
+    where lastVisitedTime between '${startTime}' and '${endTime}'
     order by lastVisitedTime desc
     limit ${(currentPage - 1) * pageSize},${pageSize}
-  `
-  getDataFromDb(sql, response, false,"YYYY-MM-DD",true)
-})
+  `;
+  getDataFromDb(sql, response, false, "YYYY-MM-DD", true);
+});
+// 近一年新增网站
+router.get("/newAdd", (req, response) => {
+  const today = formatTime(new Date().getTime());
+  const oneYearAgo = moment().subtract(2, "year").format("YYYY-MM-DD");
+  const sql = `
+    select createTime,label from sitelist
+    where createTime between '${oneYearAgo}' and '${today}'
+  `;
+  getDataFromDb(sql, response, true, "YYYY-MM-DD");
+});
 module.exports = router;

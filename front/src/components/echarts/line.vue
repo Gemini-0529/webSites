@@ -1,5 +1,14 @@
 <script setup>
-import { defineProps, onMounted, onUnmounted, defineEmits } from "vue";
+import {
+  defineProps,
+  onMounted,
+  onUnmounted,
+  defineEmits,
+  watch,
+  onBeforeUpdate,
+  nextTick,
+  ref,
+} from "vue";
 import * as echarts from "echarts";
 const props = defineProps({
   title: {
@@ -12,12 +21,21 @@ const props = defineProps({
     default: [], // {name, value}
     required: false,
   },
+  chartId: String,
+  isSmooth: {
+    type: Boolean,
+    default: true,
+    required: false,
+  },
+  loopTooltip: {
+    type: Boolean,
+    default: false
+  }
 });
 var myChart = null,
   options = {};
-
 function init() {
-  myChart = echarts.init(document.getElementById("line"));
+  myChart = echarts.init(document.getElementById(props.chartId));
   const nameList = props.lineData.map((item) => item.name);
   const valueList = props.lineData.map((item) => item.value);
 
@@ -58,9 +76,42 @@ function init() {
       {
         type: "line",
         data: valueList,
+        smooth: props.isSmooth, // 平滑过度
       },
     ],
   };
+// 自动轮播tooltip
+  if(props.loopTooltip) {
+    var index = 0;
+    var toolTimer = setInterval(() => {
+      myChart?.dispatchAction({
+        type: "showTip",
+        seriesIndex: 0,
+        dataIndex: index,
+      });
+      index++;
+      if (index > options.series[0].data.length) {
+        index = 0;
+      }
+    }, 1500);
+    myChart.on("mouseover", () => {
+      clearInterval(toolTimer);
+    });
+    myChart.on("mouseout", () => {
+      clearInterval(toolTimer);
+      toolTimer = setInterval(() => {
+        myChart?.dispatchAction({
+          type: "showTip",
+          seriesIndex: 0,
+          dataIndex: index,
+        });
+        index++;
+        if (index > options.series[0].data.length) {
+          index = 0;
+        }
+      }, 1500);
+    });
+  }
   myChart.setOption(options);
 }
 const emits = defineEmits(["clickItem"]);
@@ -80,5 +131,5 @@ function resize() {
 }
 </script>
 <template>
-  <div id="line"></div>
+  <div :id="props.chartId"></div>
 </template>

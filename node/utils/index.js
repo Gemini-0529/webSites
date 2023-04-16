@@ -85,7 +85,7 @@ function getTotal(data) {
 function formatTime(time) {
   const current = new Date(time)
   let year = current.getFullYear()
-  let month = current.getMonth() + 1 > 9 ? current.getMonth() + 1 : '0' + current.getMonth() + 1
+  let month = current.getMonth() + 1 > 9 ? current.getMonth() + 1 : '0' + (current.getMonth() + 1)
   let day = current.getDate()
   let hour = current.getHours()
   let min = current.getMinutes()

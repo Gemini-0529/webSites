@@ -31,7 +31,7 @@ async function getSiteLists() {
     const { data, status, total } = res;
     if (data.length && status === 200) {
       data.forEach(item => {
-        item.lastVisitedTime = fromNow(item.lastVisitedTime);
+        item.lastVisitedTime = fromNow(new Date(item.lastVisitedTime).getTime());
       });
       siteList.lists = data;
       siteList.total = total;

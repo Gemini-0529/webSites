@@ -12,6 +12,7 @@
 @import './el-loading-reset.scss';
 @import './el-pagination-reset.scss';
 @import './el-dropdown-reset.scss';
+@import './el-radio-group-reset.scss';
 
 @import './container.scss';
 @import '../pageStyle/siteList.scss';// 网站列表
@@ -33,6 +34,7 @@
   @include bg_content("bg_content");
   padding-left: 0;
   margin: 20px 0 0 20px;
+  flex: 1;
 }
 #home {
   padding: 20px 0 0 20px;

@@ -6,6 +6,7 @@ const menuRouter = require('./router/menu_router')
 const siteRouter = require('./router/siteList_router')
 const loginRouter = require('./router/login_router')
 const registerRouter = require('./router/register_router')
+const userRouter = require('./router/user_router')
 
 const commonRouter = require('./router/common_router')
 
@@ -27,18 +28,21 @@ app.use(express.json())// {"key":"value","key":value}
 app.use('/login', loginRouter)
 app.use('/register', registerRouter)
 
-// 菜单相关路由
-app.use('/menu', menuRouter)
 // 校验token中间件
 app.use((req,res,next) => {
-    const validToken = jwt.decrypt(req.headers.token)
-    console.log('验证token结果--->',validToken);
+    const token = req.headers.cookie.slice(6)
+    const validToken = jwt.decrypt(token)
     // 验证失败返回401
     validToken ? next() : res.status(401).send('unAuthority')
-    
 })
+// 菜单相关路由
+app.use('/menu', menuRouter)
 // 网站相关路由
 app.use('/site', siteRouter)
 
+app.use('/user', userRouter)
 // 其他相关路由
 app.use('/common', commonRouter)
+app.use((req, res) => {
+    res.status(404).send('404...123')
+})
