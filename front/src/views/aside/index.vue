@@ -41,7 +41,7 @@ const addMenu = function() {
       >
           <MenuItem :menuList="menuStore.menuTree" />
       </el-menu>
-      <el-button type="primary">添加</el-button>
+      <el-button type="primary" @click="addMenu">添加</el-button>
       <el-button type="primary" plain>添加</el-button>
     </template>
     <div v-else>暂无数据</div>

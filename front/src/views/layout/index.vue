@@ -43,6 +43,8 @@ function handleCommandUser(action) {
       break;
     case 'logout':
       Cookies.set('token', '')
+      localStorage.removeItem('token')
+      localStorage.removeItem('uid')
       router.push('/login')
       break;
   }
