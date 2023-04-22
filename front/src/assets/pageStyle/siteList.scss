@@ -25,10 +25,14 @@
         .operation {
           display: block !important;
         }
-        .img .el-image > img {
-          width: 105%;
-          height: 105%;
-          transition: all .3s ease-in-out;
+        .img {
+          filter: grayscale(0) invert(0);
+          transition: filter 1s;
+          .el-image > img {
+           width: 102%;
+           height: 102%;
+           transition: all .3s ease-in-out;
+         }
         }
         .del {
           color:#F56C6C;
@@ -36,6 +40,7 @@
       }
       .img {
         box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, .15);
+        filter: grayscale(1)
       }
       .img,.img > .el-image {
         width: 100px;
