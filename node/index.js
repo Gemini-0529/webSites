@@ -30,7 +30,7 @@ app.use('/register', registerRouter)
 
 // 校验token中间件
 app.use((req,res,next) => {
-    const token = req.headers.cookie.slice(6)
+    const token = req.headers.token
     const validToken = jwt.decrypt(token)
     // 验证失败返回401
     validToken ? next() : res.status(401).send('unAuthority')

@@ -4,7 +4,7 @@ const { getDataFromDb } = require('../utils/index.js')
 
 router.get('/menuList', (req, response)=> {
   let sql = 'select * from menuList'
-  getDataFromDb(sql, null, response)
+  getDataFromDb(sql, response, false)
 })
 router.post('/addMenu', (req, response) => {
   const {parentId, label, checkAuthority=1, level} = req.body

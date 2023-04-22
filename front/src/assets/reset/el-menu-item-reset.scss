@@ -25,17 +25,18 @@
       }
       &:hover {
         @include bg_content("bg_menu");
+        color: #fff;
       }
     }
-    &:hover {
-      @include bg_content("bg_menu");
-    };
-    &.is-opened {
-      .el-sub-menu__title {
-        @include font_color("text_primary_color");
-        @include bg_content("bg_menu");
-      }
-    }
+    // &:hover {
+    //   @include bg_content("bg_menu");
+    // };
+    // &.is-opened {
+    //   .el-sub-menu__title {
+    //     @include font_color("text_primary_color");
+    //     @include bg_content("bg_menu");
+    //   }
+    // }
   }
 //   li.el-menu-item {
 //     .is-active {

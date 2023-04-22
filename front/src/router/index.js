@@ -9,6 +9,7 @@ const Login = () => import("@/views/login/index.vue")
 const Register = () => import("@/views/register/index.vue")
 
 const UserInfo = () => import("@/views/header/components/userInfo.vue")
+const History = () => import("@/views/layout/history.vue")
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -54,6 +55,14 @@ const router = createRouter({
               component: UserInfo,
               meta: {
                 title: '用户信息'
+              }
+            },
+            {
+              path: '/history',
+              name: 'history',
+              component: History,
+              meta: {
+                title: '访问历史'
               }
             }
           ],

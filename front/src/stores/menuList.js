@@ -15,7 +15,7 @@ export const useMenu = defineStore('menuList', {
     // 获取菜单数据
     async getMenuList() {
       try {
-        const res = await menuList({id:1})
+        const res = await menuList()
         if( res?.status === 200 && res?.data?.length) {
           // const data = listToTree(res.data, 'id', 'parentId', 'subMenu')
           

@@ -21,7 +21,8 @@ router.get('/login',(req, response) => {
         // 传入用户id、name，生成token返回客户端
         const token = jwt.encrypt({uid,uname})
         response.json({
-          token:token
+          token:token,
+          uid
         })
       }else {
         response.json({

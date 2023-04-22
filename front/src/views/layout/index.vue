@@ -93,9 +93,6 @@ function handleCommandUser(action) {
           <BreadCrumb/>
           <router-view></router-view>
         </el-main>
-        <div style="width:350px;margin-top:20px;">
-          <History/>
-        </div>
       </el-container>
     </el-container>
 </template>
@@ -135,3 +132,4 @@ function handleCommandUser(action) {
     }
   }
 }
+</style>

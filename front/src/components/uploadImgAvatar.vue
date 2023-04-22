@@ -6,6 +6,7 @@
     :show-file-list="false"
     :accept="accept.join(',')"
     :before-upload="beforeUpload"
+    :headers="setHeaders"
   >
     <el-image
       v-if="dialogImageUrl"
@@ -51,4 +52,8 @@ const uploadSuccess = (res, uploadFile) => {
   dialogImageUrl.value = uploadFile.response.imgSrc;
   emits("updateImgUrl", dialogImageUrl.value);
 };
+// upload 组件 headers 丢失token
+const setHeaders = {
+  token: window.localStorage.getItem('token')
+}
 </script>
