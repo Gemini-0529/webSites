@@ -2,14 +2,14 @@ import { createRouter, createWebHistory } from "vue-router";
 const Layout = () => import("@/views/layout/index.vue")
 const Home = () => import("@/views/home/index.vue");
 const Sites = () => import("@/views/sites/index.vue");
-const SiteDetail = () => import("@/views/sites/detail.vue");
+const SiteDetail = () => import("@/views/sites/components/detail.vue");
 const Welcome = () => import("@/views/home/welcome.vue")
 
 const Login = () => import("@/views/login/index.vue")
 const Register = () => import("@/views/register/index.vue")
 
 const UserInfo = () => import("@/views/header/components/userInfo.vue")
-const History = () => import("@/views/layout/history.vue")
+const History = () => import("@/views/history/index.vue")
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -57,14 +57,14 @@ const router = createRouter({
                 title: '用户信息'
               }
             },
-            {
+             {
               path: '/history',
               name: 'history',
               component: History,
               meta: {
-                title: '访问历史'
+                title: '浏览记录'
               }
-            }
+             }
           ],
         },
       ],
