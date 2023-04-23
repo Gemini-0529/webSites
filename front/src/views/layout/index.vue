@@ -5,7 +5,6 @@ import BreadCrumb from '@components/breadcrumb.vue'
 import imgUrl from '@/assets/images/logo.png'
 import { reactive } from '@vue/reactivity'
 import { onMounted, ref } from 'vue'
-import History from './history.vue'
 const onlineUrl = 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
 import { useRouter } from "vue-router";
 import Cookies from "js-cookie"
@@ -41,11 +40,16 @@ function handleCommandUser(action) {
     case 'userInfo':
       router.push('/userInfo')
       break;
+    case 'history':
+      router.push('/history')
+      break;
     case 'logout':
       Cookies.set('token', '')
       localStorage.removeItem('token')
       localStorage.removeItem('uid')
       router.push('/login')
+      break;
+    default:
       break;
   }
 }
@@ -81,6 +85,7 @@ function handleCommandUser(action) {
               <template #dropdown>
                 <el-dropdown-menu>
                   <el-dropdown-item command="userInfo">个人信息</el-dropdown-item>
+                  <el-dropdown-item command="history">浏览记录</el-dropdown-item>
                   <el-dropdown-item command="logout">注销登录</el-dropdown-item>
                 </el-dropdown-menu>
               </template>
