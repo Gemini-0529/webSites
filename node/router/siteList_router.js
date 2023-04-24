@@ -11,11 +11,11 @@ const moment = require("moment");
 const https = require("https");
 // 查询网站列表
 router.get("/siteList", (req, response) => {
-  const { id, currentPage, pageSize } = req.query;
+  const { id, currentPage, pageSize, uid } = req.query;
   // select * from siteList
   const sql = `
     SELECT *,COUNT(1) over() as total FROM siteList
-    where typeId = ${id}
+    where typeId = ${id} and uid = ${uid}
     limit ${(currentPage - 1) * pageSize},${pageSize}
   `;
   getDataFromDb(sql, response, true, "YYYY-MM-DD", true);
@@ -45,13 +45,13 @@ router.get("/getIco", (req, response) => {
 });
 // 新增网站
 router.post("/addSite", (req, response) => {
-  const { typeId, label, description, link, icon, createTime, isCollect } =
+  const { typeId, label, description, link, icon, createTime, isCollect, uid } =
     req.body;
   // const sql = `insert into siteList (typeId,label,descript,link,icon,createTime,isCollect) values (${typeId},${label},${descript},${link},${icon},${createTime},${isCollect})`;
   const sql = `insert into siteList
-    (typeId, label, description, link, icon, isCollect)
+    (typeId, label, description, link, icon, isCollect, uid)
     values
-    (${typeId}, '${label}', '${description}', '${link}', '${icon}', ${isCollect})
+    (${typeId}, '${label}', '${description}', '${link}', '${icon}', ${isCollect}, ${uid})
   `;
   editDbData(sql, response);
 });
