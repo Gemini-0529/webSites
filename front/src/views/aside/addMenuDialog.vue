@@ -13,6 +13,7 @@ let formData = reactive({
     label: "",
     parentId: "",
     level: 1,
+    uid: localStorage.getItem('uid') * 1
   },
 });
 
@@ -23,8 +24,7 @@ async function submit() {
     params.parentId = null;
   }
   const res = await addLeftMenu(params);
-  console.log(res);
-  // emits('update:showDialog', false)
+  emits('update:showDialog', false)
 }
 const form = ref(null);
 function close() {
@@ -65,7 +65,7 @@ function close() {
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="close">取消</el-button>
-        <el-button type="primary" @click="submit"> 确定 </el-button>
+        <el-button type="primary" @click="submit">确定</el-button>
       </span>
     </template>
   </el-dialog>
