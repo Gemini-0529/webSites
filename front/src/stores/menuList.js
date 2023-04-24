@@ -14,8 +14,11 @@ export const useMenu = defineStore('menuList', {
   actions: {
     // 获取菜单数据
     async getMenuList() {
+      const params = {
+        uid: localStorage.getItem('uid') * 1
+      }
       try {
-        const res = await menuList()
+        const res = await menuList(params)
         if( res?.status === 200 && res?.data?.length) {
           // const data = listToTree(res.data, 'id', 'parentId', 'subMenu')
           

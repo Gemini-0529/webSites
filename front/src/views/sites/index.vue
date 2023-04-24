@@ -19,6 +19,7 @@ const siteList = reactive({
     id: 0,
     currentPage: 1,
     pageSize: 10,
+    uid: localStorage.getItem('uid') * 1,
   },
 });
 //
