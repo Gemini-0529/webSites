@@ -28,6 +28,7 @@ let formData = reactive({
     link: "",
     icon: "http://localhost:3000/images/default.png",
     isCollect: 0,
+    uid: localStorage.getItem('uid') * 1
   },
 });
 const extFormData = reactive({
@@ -60,6 +61,7 @@ watch(
         link: "",
         icon: "http://localhost:3000/images/default.png",
         isCollect: 0,
+        uid: localStorage.getItem('uid') * 1
       };
     }
   }
