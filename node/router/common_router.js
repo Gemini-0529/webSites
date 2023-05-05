@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const multiparty = require('multiparty')
+const sysIP = require('../utils/getSysIP')
 
 router.post('/upload', (req, res) => {
   let form = new multiparty.Form()
@@ -18,7 +19,7 @@ router.post('/upload', (req, res) => {
     }else {
       res.json({
         code: 200,
-        imgSrc: 'http://localhost:3000/' + url
+        imgSrc: `http://${sysIP()}:3000/${url}`
       })
     }
   })
