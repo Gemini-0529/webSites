@@ -85,6 +85,7 @@ node环境变量需要修改
 #### 上传dis文件夹
 
 #### 配置Nginx，解决跨域
+> 后面的always用于解决 *Nginx转发server响应的过程中，add_header只有在2xx和3xx状态码时才添加，导致4xx和5xx跨域* 。接口返回401后，前端无法获取相应结果，无法跳转到login页面
 
 ```javascript
 server {
@@ -102,10 +103,10 @@ server {
     listen 9100;
     location / {
       proxy_pass http://192.168.179.134:3000/;
-      add_header Access-Control-Allow-Origin '*';
-      add_header Access-Control-Allow-Headers '*';
-      add_header Access-Control-Allow-Methods '*';
-      add_header Access-Control-Allow-Credentials true;
+      add_header Access-Control-Allow-Origin '*' always;
+      add_header Access-Control-Allow-Headers '*' always;
+      add_header Access-Control-Allow-Methods '*' always;
+      add_header Access-Control-Allow-Credentials true always;
     } 
   }
 ```
