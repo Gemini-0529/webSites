@@ -159,6 +159,10 @@ app.use((req,res,next) => {
 
 >  用filezilla连接传输文件*ftp://192.168.179.134:21*
 
+#### 虚拟机IP地址改变问题
+
+[把ip地址设置成固定ip](https://blog.csdn.net/weixin_42051799/article/details/126464388)
+
 #### 预览网站
 
 > http://192.168.179.134/login
