@@ -11,6 +11,8 @@ const Register = () => import("@/views/register/index.vue")
 const UserInfo = () => import("@/views/header/components/userInfo.vue")
 const History = () => import("@/views/history/index.vue")
 
+const NotFound = () => import("@/views/404/404.vue")
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -85,6 +87,14 @@ const router = createRouter({
         title: '注册'
       }
     },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'Not Found',
+      component: NotFound,
+      meta: {
+        title: 'Not Found'
+      }
+    }
   ],
 });
 router.beforeEach((to, from, next) => {
