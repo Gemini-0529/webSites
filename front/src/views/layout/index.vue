@@ -8,6 +8,7 @@ import { onMounted, ref } from 'vue'
 const onlineUrl = 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
 import { useRouter } from "vue-router";
 import Cookies from "js-cookie"
+import { ElMessageBox } from 'element-plus'
 
 const themes = reactive([
   {
@@ -35,6 +36,23 @@ function handleCommand(theme) {
   window.document.documentElement.setAttribute( "data-theme", theme )
 }
 const router = useRouter()
+function logOut() {
+  ElMessageBox.confirm(
+    '确定退出系统吗？',
+    '警告',
+    {
+      confirmButtonText: '退出',
+      cancelButtonText: '取消',
+      type: 'warning'
+    }
+  )
+  .then(() => {
+    Cookies.remove('token')
+    localStorage.removeItem('uid')
+    router.push('/login')
+  })
+  .catch(()=> {})
+}
 function handleCommandUser(action) {
   switch(action){
     case 'userInfo':
@@ -44,10 +62,11 @@ function handleCommandUser(action) {
       router.push('/history')
       break;
     case 'logout':
-      Cookies.set('token', '')
-      localStorage.removeItem('token')
-      localStorage.removeItem('uid')
-      router.push('/login')
+      //Cookies.set('token', '')
+      //localStorage.removeItem('token')
+      //localStorage.removeItem('uid')
+      //router.push('/login')
+      logOut();
       break;
     default:
       break;
