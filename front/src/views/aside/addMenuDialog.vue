@@ -25,15 +25,13 @@ async function getParentMenu() {
 }
 
 let formData = reactive({
-  data: {
-    label: "",
-    parentId: "",
-    level: 1,
-    uid,
-  },
+  label: "",
+  parentId: "",
+  level: 1,
+  uid,
 });
 watch(
-  () => formData.data.level,
+  () => formData.level,
   (nval, oval) => {
     // 选择二级菜单，获取当前用户创建的一级菜单
     if (nval == 2) {
@@ -41,21 +39,21 @@ watch(
     }
   }
 );
-const emits = defineEmits(["update:showDialog"]);
+
 const menuStore = useMenu();
 async function submit() {
-  const params = formData.data;
-  if (params.level == 1) {
-    params.parentId = null;
+  if (formData.level == 1) {
+    formData.parentId = null;
   }
-  const res = await addLeftMenu(params);
+  const res = await addLeftMenu(formData);
   if (res.status === 200) {
-    ElMessage.success(`新增 ${params.label} 菜单成功`);
+    ElMessage.success(`新增 ${formData.label} 菜单成功`);
     await menuStore.getMenuList();
   }
-  emits("update:showDialog", false);
+  close();
 }
 const form = ref(null);
+const emits = defineEmits(["update:showDialog"]);
 function close() {
   emits("update:showDialog", false);
   form.value.resetFields();
@@ -71,21 +69,22 @@ function close() {
     v-if="showDialog"
   >
     <el-form :model="formData" ref="form" label-position="right">
-      <el-form-item label="名称：" label-width="100px">
-        <el-input v-model="formData.data.label" autocomplete="off" />
+      <el-form-item label="名称：" label-width="100px" prop="label">
+        <el-input v-model="formData.label" autocomplete="off" />
       </el-form-item>
-      <el-form-item label="菜单级别：" label-width="100px">
-        <el-radio-group v-model="formData.data.level">
+      <el-form-item label="菜单级别：" label-width="100px" prop="level">
+        <el-radio-group v-model="formData.level">
           <el-radio :label="1">一级</el-radio>
           <el-radio :label="2">二级</el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item
         label="父级菜单："
-        v-if="formData.data.level == 2"
+        v-if="formData.level == 2"
         label-width="100px"
+        prop="parentId"
       >
-        <el-select v-model="formData.data.parentId" placeholder="请选择父级菜单">
+        <el-select v-model="formData.parentId" placeholder="请选择父级菜单">
           <el-option
             :label="item.label"
             :value="item.id"
