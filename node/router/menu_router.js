@@ -24,4 +24,10 @@ router.post('/addMenu', (req, response) => {
   editDbData(sql, response)
 })
 
+// 删除菜单
+router.post('/delMenu', (req, response) => {
+  const sql = `delete from menulist where id in(${req.body.delMenuIds.join()})`
+  editDbData(sql, response)
+})
+
 module.exports = router
