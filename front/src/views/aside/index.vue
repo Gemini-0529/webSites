@@ -1,15 +1,18 @@
 <script setup>
 // import { menuList } from '@/api/menuList.js'
-import { reactive, onBeforeMount, onMounted, ref } from "vue";
+import { reactive, onMounted, ref } from "vue";
 import { useMenu } from "@/stores/menuList.js";
-import MenuItem from "./menuItem.vue";
+import MenuItem from "./components/menuItem.vue";
 import { useRouter } from "vue-router";
-import addMenuDialog from './addMenuDialog.vue'
+
+import AddMenuDialog from './components/addMenuDialog.vue'
+import DelMenuDialog from './components/delMenuDialog.vue'
+import OperationBtn from './components/operationBtn.vue'
+
 
 // 获取菜单数据
 const menuStore = useMenu();
 menuStore.getMenuList();
-
 const router = useRouter();
 // 点击菜单回调
 /**
@@ -24,9 +27,15 @@ function selectMenu(index, indexPath, item) {
     params: { id: index },
   });
 }
-const showDialog = ref(false)
+
+
+const showAddDialog = ref(false)
 const addMenu = function() {
-  showDialog.value = true
+  showAddDialog.value = true
+}
+const showDelDialog = ref(false)
+const delMenu = function() {
+  showDelDialog.value = true
 }
 </script>
 <template>
@@ -41,10 +50,10 @@ const addMenu = function() {
       >
           <MenuItem :menuList="menuStore.menuTree" />
       </el-menu>
-      <el-button type="primary" @click="addMenu">添加</el-button>
-      <el-button type="primary" plain>添加</el-button>
     </template>
     <div v-else>暂无数据</div>
   </el-aside>
-  <addMenuDialog v-model:showDialog="showDialog"/>
+  <AddMenuDialog v-model:showDialog="showAddDialog" v-if="showAddDialog"/>
+  <DelMenuDialog v-model:showDialog="showDelDialog" v-if="showDelDialog"/>
+  <OperationBtn @add="addMenu" @del="delMenu"/>
 </template>
