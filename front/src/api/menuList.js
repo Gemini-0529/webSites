@@ -16,3 +16,7 @@ export function parentMenu(params) {
     params
   })
 }
+
+export function delMenu(params) {
+  return axios.post(`${base_url}/menu/delMenu`, params)
+}
