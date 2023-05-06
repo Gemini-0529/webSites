@@ -1,15 +1,18 @@
 import axios from '@/axios.js'
+const base_url = import.meta.env.VITE_APP_URL
 
 export function menuList(params) {
-  return axios.get('/API/menu/menuList', {
+  return axios.get(`${base_url}/menu/menuList`, {
     params
   })
 }
+
 export function addLeftMenu(params) {
-  return axios.post('/API/menu/addMenu', params)
+  return axios.post(`${base_url}/menu/addMenu`,params)
 }
-// function testpost(params) {
-//   return axios.post('/API/xxx', {
-//     ...params
-//   })
-// }
+
+export function parentMenu(params) {
+  return axios.get(`${base_url}/menu/parentMenu`, {
+    params
+  })
+}
