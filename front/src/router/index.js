@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from "vue-router";
 const Layout = () => import("@/views/layout/index.vue")
 const Home = () => import("@/views/home/index.vue");
 const Sites = () => import("@/views/sites/index.vue");
-const SiteDetail = () => import("@/views/sites/components/detail.vue");
 const Welcome = () => import("@/views/home/welcome.vue")
 
 const Login = () => import("@/views/login/index.vue")
@@ -41,14 +40,6 @@ const router = createRouter({
               component: Sites,
               meta: {
                 title: '网站'
-              }
-            },
-            {
-              path: "/sites/:id/detail",
-              name: "SiteDetail",
-              component: SiteDetail,
-              meta: {
-                title: '详情'
               }
             },
             {
