@@ -1,7 +1,13 @@
 <script setup>
 import { useRouter } from "vue-router";
 import { watch, reactive, ref, watchEffect } from "vue";
-import { getSiteList, delSite, colSite, siteDetail } from "@/api/siteList.js";
+import {
+  getSiteList,
+  delSite,
+  colSite,
+  siteDetail,
+  addVisitTimes,
+} from "@/api/siteList.js";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { useMenu } from "@/stores/menuList.js";
 import CreateSiteDialog from "./components/createSite.vue";
@@ -10,7 +16,7 @@ import Pagination from "@/components/pagination.vue";
 import empty from "../../assets/images/empty-light.png";
 import { fromNow } from "@/utils/index.js";
 const router = useRouter();
-console.log(router);
+let count = ref(5);
 const siteList = reactive({
   lists: [],
   total: 0,
@@ -19,7 +25,7 @@ const siteList = reactive({
     id: 0,
     currentPage: 1,
     pageSize: 10,
-    uid: localStorage.getItem('uid') * 1,
+    uid: localStorage.getItem('uid')
   },
 });
 //
@@ -31,14 +37,15 @@ async function getSiteLists() {
     const res = await getSiteList(siteList.params);
     const { data, status, total } = res;
     if (data.length && status === 200) {
-      data.forEach(item => {
+      data.forEach((item) => {
         item.lastVisitedTime = fromNow(new Date(item.lastVisitedTime).getTime());
       });
       siteList.lists = data;
       siteList.total = total;
     } else {
       siteList.lists = [];
-      siteList.total = 0;
+      // node未实现返回total，暂时注释掉，否则分页条强制跳转到第一页
+      // siteList.total = 0;
     }
   } catch (err) {
     console.log("服务器错误", err.message);
@@ -56,7 +63,7 @@ const menuStore = useMenu();
 watch(
   () => router.currentRoute.value.params.id,
   (n, o) => {
-    if (n != o) {
+    if (n && n != o) {
       menuStore.updateCurMenu(n);
       getSiteLists();
     }
@@ -107,7 +114,7 @@ watch(showDialog, (n, o) => {
 });
 async function getSiteDetail(id) {
   const res = await siteDetail({ id });
-  if (res.total === 1 && res.status === 200) {
+  if (res.status === 200) {
     siteInfo.detail = res.data[0];
   } else {
     ElMessage.error(`获取详情失败, ${res.msg}`);
@@ -117,9 +124,11 @@ async function editCurSite(id) {
   await getSiteDetail(id);
   showDialog.value = true;
 }
-function jumpToSite(url) {
+async function jumpToSite({ link: url, id, visitTimes }) {
   try {
-    useRenderH().then(() => {
+    await addVisitTimes({ id, visitTimes });
+    useRenderH()
+    .then(() => {
       window.open(url);
     });
   } catch (error) {
@@ -148,7 +157,7 @@ function handleSizeChange(val) {
       <div
         class="siteItem"
         v-for="item in siteList.lists"
-        @click.stop="jumpToSite(item.link)"
+        @click.stop="jumpToSite(item)"
       >
         <div class="img" @click.stop="">
           <el-image
@@ -163,19 +172,28 @@ function handleSizeChange(val) {
           <div class="main">
             <div class="title">
               <b>{{ item.label }}</b>
+              <!-- <span>{{ item.lastVisitedTime }}</span> -->
             </div>
             <div class="desc">{{ item.description }}</div>
           </div>
-          <div class="operation animate__animated animate__bounceIn">
-            <el-icon
-              :class="item.isCollect === 1 ? 'select' : 'noselect'"
-              @click.stop="collectSite(item.id, item.isCollect)"
-            >
-              <StarFilled v-if="item.isCollect === 1" />
-              <Star v-else />
-            </el-icon>
-            <el-icon @click.stop="editCurSite(item.id)"><Edit /></el-icon>
-            <el-icon class="del" @click.stop="deleteSite(item.id)"
+          <div class="operation">
+          <!-- <div class="operation animate__animated animate__bounceIn"> -->
+            <div>
+              <div class="placeholder"></div>
+              <el-icon
+                :class="item.isCollect === 1 ? 'select' : 'noselect'"
+                @click.stop="collectSite(item.id, item.isCollect)"
+                class="delay30"
+              >
+                <StarFilled v-if="item.isCollect === 1" />
+                <Star v-else />
+              </el-icon>
+            </div>
+            <div>
+              <div class="placeholder"></div>
+            <el-icon @click.stop="editCurSite(item.id)" class="delay60"><Edit /></el-icon>
+            </div>
+            <el-icon class="del delay90" @click.stop="deleteSite(item.id)"
               ><Delete
             /></el-icon>
           </div>
@@ -200,7 +218,7 @@ function handleSizeChange(val) {
     v-model:showDialog="showDialog"
     @operaSuccess="getSiteLists"
     :siteDetail="siteInfo.detail"
-    :total="100"
+    :count="count"
   />
 </template>
 <style scoped>
@@ -209,5 +227,33 @@ function handleSizeChange(val) {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.siteItem {
+  position: relative;
+}
+.siteItem::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 6px;
+  /* background: #13adf5; */
+  background: linear-gradient(120deg, #13adf5 0%, #0875e7 88%);
+  border-radius: 3px;
+  transition: all .3s ease-in-out;
+}
+.siteItem:hover:after {
+  width: 180px;
+  margin-left: -90px;
+}
+.delay30 {
+  animation-delay: 30ms;
+}
+.delay60 {
+  animation-delay: 60ms;
+}
+.delay90 {
+  animation-delay: 90ms;
 }
 </style>
