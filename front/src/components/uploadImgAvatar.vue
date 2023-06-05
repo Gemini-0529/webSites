@@ -1,12 +1,15 @@
 <template>
   <el-upload
-    action="/API/common/upload"
+    :action="`${base_url}/common/upload`"
     list-type="picture-card"
     :on-success="uploadSuccess"
     :show-file-list="false"
     :accept="accept.join(',')"
     :before-upload="beforeUpload"
     :headers="setHeaders"
+    :auto-upload="false"
+    :on-change="onChange"
+    ref="upload"
   >
     <el-image
       v-if="dialogImageUrl"
@@ -17,18 +20,13 @@
     />
     <el-icon v-else><Plus /></el-icon>
   </el-upload>
-
-  <el-dialog v-model="dialogVisible">
-    <img w-full :src="dialogImageUrl" alt="Preview Image" />
-  </el-dialog>
 </template>
 <script setup>
 import { ref, defineEmits } from "vue";
 import { Plus } from "@element-plus/icons-vue";
 import { ElMessage } from 'element-plus'
-
+import Cookies from 'js-cookie'
 const dialogImageUrl = ref("");
-const dialogVisible = ref(false);
 const accept = ref(['image/jpeg','image/jpg','image/png','image/gif'])
 const beforeUpload = (file) => {
   console.log(file);
@@ -47,13 +45,24 @@ const beforeUpload = (file) => {
     console.log('图片上传出错-->',err);
   }
 }
+const upload = ref(null)
+// 不自动上传只会触发change事件
+const onChange = (uploadFile,uploadFiles) => {
+  dialogImageUrl.value = uploadFile.url
+}
+const uploadImg = () => {
+  upload.value.submit()
+}
+defineExpose({uploadImg})
 const emits = defineEmits(["updateImgUrl"]);
 const uploadSuccess = (res, uploadFile) => {
   dialogImageUrl.value = uploadFile.response.imgSrc;
   emits("updateImgUrl", dialogImageUrl.value);
 };
-// upload 组件 headers 丢失token
+
 const setHeaders = {
-  token: window.localStorage.getItem('token')
+  token: Cookies.get('token')
 }
+
+const base_url = import.meta.env.VITE_APP_URL
 </script>
